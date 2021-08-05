@@ -1,0 +1,49 @@
+//Урок 1, Задание 1
+
+import Foundation
+
+let a: Double = 2
+let b: Double = -9
+let c: Double = 7
+
+if a == 0{
+    print("Это не квадратное уравнение")
+    print()
+}else {
+    let d: Double = b*b - 4*a*c
+    
+    if d < 0{
+        print("Корней нет")
+        print()
+    }else{
+        let x1: Double = (-b + sqrt(d)) / (2*a)
+        let x2: Double = (-b - sqrt(d)) / (2*a)
+        print("Корни уравнения: \(x1), \(x2)")
+        print()
+    }
+}
+
+
+//Задание 2
+
+import Foundation
+
+let n: Double = 3
+let m: Double = 4
+
+print("Площадь треугольника: \(n*m/2)")
+print("Гипотенуза треугольника: \(sqrt(n*n + m*m))")
+print("Периметр треугольника: \(n + m + sqrt(n*n + m*m))")
+print()
+
+
+//Задание 3
+
+var sum: Double = 500625
+let p: Double = 2.85
+
+for _ in 0...4 {
+    sum = sum + sum*p/100
+}
+
+print(sum)
