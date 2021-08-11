@@ -1,0 +1,122 @@
+enum engine {
+    case on, off
+}
+
+enum windows {
+    case open, close
+}
+
+enum fill_trunk {
+    case full, empty
+}
+
+struct SportCar {
+    let brand: String
+    let year: Int
+    let trunk: Int
+    
+    var engine: engine {
+        willSet {
+            newValue == .on ? print ("двигатель \(brand) включен") : print("двигатель \(brand) выключен")
+        }
+    }
+    
+    var windows: windows {
+        willSet {
+            newValue == .open ? print("окна \(brand) открыты") : print("окна \(brand) закрыты")
+        }
+    }
+    
+    
+    var fill_trunk: fill_trunk {
+        willSet {
+            newValue == .full ? print("багажник \(brand) заполнен") : print("багажник \(brand) пустой")
+        }
+    }
+    
+    var color: String
+    
+    mutating func color_change(col:String) {
+        switch col {
+        case "жёлтый":
+            self.color = "жёлтый"
+            print("цвет \(brand) был изменён на жёлтый")
+        case "белый":
+            self.color = "белый"
+            print("цвет \(brand) был изменён на белый")
+        case "розовый":
+            self.color = "розовый"
+            print("цвет \(brand) был изменён на розовый")
+        case "чёрный":
+            self.color = "чёрный"
+            print("цвет \(brand) был изменён на чёрный")
+        default:
+            print("Такого цвета нет")
+        }
+    }
+}
+
+struct TrunkCar {
+    let brand: String
+    let year: Int
+    let trunk: Int
+    
+    var engine: engine {
+        willSet {
+            newValue == .on ? print ("двигатель \(brand) включен") : print("двигатель \(brand) выключен")
+        }
+    }
+    
+    var windows: windows {
+        willSet {
+            newValue == .open ? print("окна \(brand) открыты") : print("окна \(brand) закрыты")
+        }
+    }
+    
+    
+    var fill_trunk: fill_trunk {
+        willSet {
+            newValue == .full ? print("кузов \(brand) заполнен") : print("кузов \(brand) пустой")
+        }
+    }
+    
+    var color: String
+    
+    mutating func color_change(col:String) {
+        switch col {
+        case "жёлтый":
+            self.color = "жёлтый"
+            print("цвет \(brand) был изменён на жёлтый")
+        case "белый":
+            self.color = "белый"
+            print("цвет \(brand) был изменён на белый")
+        case "розовый":
+            self.color = "розовый"
+            print("цвет \(brand) был изменён на розовый")
+        case "чёрный":
+            self.color = "чёрный"
+            print("цвет \(brand) был изменён на чёрный")
+        default:
+            print("Такого цвета нет")
+        }
+    }
+}
+
+
+var car1 = SportCar (brand: "Acura", year: 2016, trunk: 1000,engine: .on, windows: .open,fill_trunk: .empty, color: "white")
+print("\(car1.brand) \(car1.year), вместительность багажника: \(car1.trunk), двигатель \(car1.engine), окна \(car1.windows), багажник \(car1.fill_trunk)")
+print()
+
+var car2 = TrunkCar (brand: "Hyundai", year: 2015, trunk: 10000,engine: .off, windows: .close,fill_trunk: .full, color: "black")
+print("\(car2.brand) \(car2.year), вместительность кузова: \(car2.trunk), двигатель \(car2.engine), окна \(car2.windows), кузов \(car2.fill_trunk)")
+print()
+
+car1.engine = .off
+car1.windows = .close
+car1.color_change(col: "розовый")
+print()
+
+car2.engine = .on
+car2.fill_trunk = .full
+car2.color_change(col: "белый")
+
