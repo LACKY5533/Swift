@@ -1,0 +1,158 @@
+enum engine: String {
+    case on, off
+}
+
+enum windows: String {
+    case open, close
+}
+
+protocol Car {
+    var brand: String { get set }
+    var year: Int { get set }
+    var color: String { get set }
+    
+    func color_change(col:String)
+}
+
+extension Car {
+    
+    func Windows(action: windows) {
+        switch action {
+        case .open:
+            print("окна \(brand) открыты")
+        case .close:
+            print("окна \(brand) закрыты")
+        }
+    }
+    
+    func Engine(action: engine) {
+        switch action {
+        case .on:
+            print("двигатель \(brand) запущен")
+        case .off:
+            print("двигатель \(brand) заглушён")
+        }
+    }
+
+}
+
+class trunkCar: Car {
+
+    enum hatch: String {
+        case open = "открыт", close = "закрыт"
+    }
+    
+    var brand: String
+    var year: Int
+    var color: String
+    
+    var hatch: hatch {
+        willSet {
+            newValue == .open ? print("люк \(brand) открыт") : print("люк \(brand) закрыт")
+        }
+    }
+        
+    init(brand: String, year: Int, color: String, hatch: hatch) {
+        self.brand = brand
+        self.year = year
+        self.color = color
+        self.hatch = hatch
+    }
+    
+    func color_change(col:String) {
+        switch col {
+        case "жёлтый":
+            self.color = "жёлтый"
+            print("цвет \(brand) был изменён на жёлтый")
+        case "белый":
+            self.color = "белый"
+            print("цвет \(brand) был изменён на белый")
+        case "розовый":
+            self.color = "розовый"
+            print("цвет \(brand) был изменён на розовый")
+        case "чёрный":
+            self.color = "чёрный"
+            print("цвет \(brand) был изменён на чёрный")
+        default:
+            print("Такого цвета нет")
+        }
+    }
+    
+}
+
+extension trunkCar: CustomStringConvertible {
+    var description: String {
+        return "\(self.brand) \(year), цвет: \(self.color), люк \(self.hatch.rawValue)"
+    }
+}
+
+
+class sportCar: Car {
+
+    enum accelerator: String {
+        case on = "включён", off = "выключен"
+    }
+    
+    var brand: String
+    var year: Int
+    var color: String
+    
+    var accelerator: accelerator {
+        willSet {
+            newValue == .on ? print("ускоритель \(brand) был активирован") : print("ускоритель \(brand) был деактивирован")
+        }
+    }
+        
+    init(brand: String, year: Int, color: String, accelerator: accelerator) {
+        self.brand = brand
+        self.year = year
+        self.color = color
+        self.accelerator = accelerator
+    }
+    
+    func color_change(col:String) {
+        switch col {
+        case "жёлтый":
+            self.color = "жёлтый"
+            print("цвет \(brand) был изменён на жёлтый")
+        case "белый":
+            self.color = "белый"
+            print("цвет \(brand) был изменён на белый")
+        case "розовый":
+            self.color = "розовый"
+            print("цвет \(brand) был изменён на розовый")
+        case "чёрный":
+            self.color = "чёрный"
+            print("цвет \(brand) был изменён на чёрный")
+        default:
+            print("Такого цвета нет")
+        }
+    }
+    
+}
+
+extension sportCar: CustomStringConvertible {
+    var description: String {
+        return "\(self.brand) \(year), цвет: \(self.color), ускоритель \(self.accelerator.rawValue)"
+    }
+}
+
+
+var car1 = trunkCar(brand: "Acura", year: 2016, color: "белый", hatch: .close)
+print(car1)
+print()
+
+var car2 = sportCar(brand: "Bugatti Chiron Sport", year: 2019, color: "чёрный", accelerator: .off)
+print(car2)
+print()
+
+car1.color_change(col: "розовый")
+car1.Engine(action: .off)
+car1.Windows(action: .close)
+car1.hatch = .open
+print()
+
+car2.color_change(col: "жёлтый")
+car2.Engine(action: .on)
+car2.Windows(action: .open)
+car2.accelerator = .on
