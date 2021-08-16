@@ -1,0 +1,99 @@
+//Урок 2, Задание 1
+
+print("//Задание №1//")
+func even_number(_ a: Int) -> Bool { //Функция, проверяющая чётное число или нет
+    if (a % 2) == 0 {
+        return true
+    }else {
+        return false
+    }
+}
+
+var a: Int = 2
+even_number(a) == true ? print("Число \(a) чётное") : print("Число \(a) нечётное")
+a = 5
+even_number(a) == true ? print("Число \(a) чётное") : print("Число \(a) нечётное")
+print()
+
+
+//Задание 2
+
+print("//Задание №2//")
+func divisible_by_3(_ a: Int) -> Bool { //Функция, проверяющая делится ли число на 3 без остатка
+    if (a % 3) == 0 {
+        return true
+    }else {
+        return false
+    }
+}
+
+a = 6
+divisible_by_3(a) == true ? print("Число \(a) делится на 3 без остатка") : print("Число \(a) не делится на 3 без остатка")
+a = 8
+divisible_by_3(a) == true ? print("Число \(a) делится на 3 без остатка") : print("Число \(a) не делится на 3 без остатка")
+print()
+
+
+//Задание 3
+
+print("//Задание №3//")
+var mas = [Int](1...100)
+
+print(mas)
+print()
+
+
+//Задание 4
+
+print("//Задание №4//")
+a = 0
+while a < mas.count {
+    if (even_number(mas[a]) == true) || (divisible_by_3(mas[a]) == false) {
+        mas.remove(at: a)
+    }else{
+        a += 1
+    }
+}
+print(mas)
+print()
+
+
+//Задание 5
+
+print("//Задание №5//")
+func fibonacci(_ mas2: [Int], _ i: Int) -> Int { //Функция, которая добавляет в массив новое число Фибоначчи
+    if i == 0 {
+        return 0
+    }else if i == 1 {
+        return 1
+    }else{
+        return mas2[i-1] + mas2[i-2]
+    }
+}
+
+var mas2 = [Int]()
+for i in 0..<50 {
+    mas2.append(fibonacci(mas2, i))
+}
+print(mas2)
+print()
+
+
+//Задание 6
+
+print("//Задание №6//")
+func prime_numbers(_ n: Int) -> [Int] { //Функция, которая находит все простые числа до n
+    var sp1 = Array(repeating: false, count: 547)
+    var sp2 = [Int]()
+    for i in 2...n {
+        if sp1[i] == false {
+            sp2.append(i)
+            for j in stride(from: i*i, through: n, by: i) {
+                sp1[j] = true
+            }
+        }
+    }
+    return sp2
+}
+
+print(prime_numbers(546))
