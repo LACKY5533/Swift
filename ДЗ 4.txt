@@ -1,0 +1,144 @@
+enum engine: String {
+    case on = "включён", off = "выключен"
+}
+
+enum windows: String {
+    case open = "открыты", close = "закрыты"
+}
+
+enum fill_trunk: String {
+    case full = "полный", empty = "пустой"
+}
+
+enum hatch: String {
+    case open = "открыт", close = "закрыт"
+}
+
+enum accelerator: String {
+    case on = "включён", off = "выключен"
+}
+
+class Car {
+    let brand: String
+    let year: Int
+    
+    var engine: engine {
+        willSet {
+            newValue == .on ? print ("двигатель \(brand) включен") : print("двигатель \(brand) выключен")
+        }
+    }
+    
+    var windows: windows {
+        willSet {
+            newValue == .open ? print("окна \(brand) открыты") : print("окна \(brand) закрыты")
+        }
+    }
+    
+    
+    var color: String
+    
+    func color_change(col:String) {
+        switch col {
+        case "жёлтый":
+            self.color = "жёлтый"
+            print("цвет \(brand) был изменён на жёлтый")
+        case "белый":
+            self.color = "белый"
+            print("цвет \(brand) был изменён на белый")
+        case "розовый":
+            self.color = "розовый"
+            print("цвет \(brand) был изменён на розовый")
+        case "чёрный":
+            self.color = "чёрный"
+            print("цвет \(brand) был изменён на чёрный")
+        default:
+            print("Такого цвета нет")
+        }
+    }
+    
+    init(brand: String, year: Int,engine: engine, windows: windows, color: String) {
+        self.brand = brand
+        self.year = year
+        self.engine = engine
+        self.windows = windows
+        self.color = color
+    }
+}
+
+
+class trunkCar: Car {
+
+    let trunk: Int
+        
+    var fill_trunk: fill_trunk {
+        willSet {
+            newValue == .full ? print("багажник \(brand) заполнен") : print("багажник \(brand) пустой")
+        }
+    }
+    
+    var hatch: hatch {
+        willSet {
+            newValue == .open ? print("люк \(brand) открыт") : print("люк \(brand) закрыт")
+        }
+        }
+        
+    init(brand: String, year: Int,engine: engine, windows: windows, color: String, trunk: Int, fill_trunk: fill_trunk, hatch: hatch) {
+        self.trunk = trunk
+        self.fill_trunk = fill_trunk
+        self.hatch = hatch
+        
+        super.init(brand: brand, year: year,engine: engine, windows: windows, color: color)
+    }
+    
+    func Info() {
+        print("\(brand), \(year), вместительность багажника: \(trunk), двигатель \(engine.rawValue), окна \(windows.rawValue), багажник \(fill_trunk.rawValue), люк \(hatch.rawValue), цвет \(color)")
+    }
+    
+}
+
+
+class sportCar: Car {
+
+    let spoiler_height: Int
+        
+    var accelerator: accelerator {
+        willSet {
+            newValue == .on ? print("ускоритель \(brand) был активирован") : print("ускоритель \(brand) был деактивирован")
+        }
+    }
+    
+        
+    init(brand: String, year: Int,engine: engine, windows: windows, color: String, spoiler_height: Int, accelerator: accelerator) {
+        self.spoiler_height = spoiler_height
+        self.accelerator = accelerator
+        
+        super.init(brand: brand, year: year,engine: engine, windows: windows, color: color)
+    }
+    
+    func Info() {
+        print("\(brand) \(year), двигатель \(engine.rawValue), окна \(windows.rawValue), цвет \(color), высота спойлера \(spoiler_height), ускоритель \(accelerator.rawValue)")
+    }
+}
+
+
+var car1 = trunkCar (brand: "Acura", year: 2016,engine: .on, windows: .open, color: "белый", trunk: 1000, fill_trunk: .empty, hatch: .close)
+car1.Info()
+print()
+
+var car2 = sportCar (brand: "Bugatti Chiron Sport", year: 2019,engine: .off, windows: .close, color: "чёрный",spoiler_height: 100,accelerator: .off)
+car2.Info()
+print()
+
+car1.engine = .off
+car1.windows = .close
+car1.color_change(col: "розовый")
+car1.hatch = .open
+print()
+
+car2.engine = .on
+car2.windows = .open
+car2.accelerator = .on
+car2.color_change(col: "жёлтый")
+
+
+
