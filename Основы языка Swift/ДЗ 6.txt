@@ -1,0 +1,99 @@
+class Plate {
+    var length: Double
+    var width: Double
+    var height: Double
+    var kilograms: Double
+    
+    func volume() -> Double {
+        return length * width * height
+    }
+    
+    init(length: Double, width: Double, height: Double, kilograms: Double) {
+        self.length = length
+        self.width = width
+        self.height = height
+        self.kilograms = kilograms
+    }
+}
+
+extension Plate: CustomStringConvertible {
+    var description : String {
+        return "длина: \(length), ширина: \(width), высота: \(height), кг: \(kilograms), объём: \(volume())"
+    }
+}
+
+class Pipe {
+    var length: Double
+    var radius: Double
+    var kilograms: Double
+    
+    func volume() -> Double {
+        return length * radius
+    }
+    
+    init(length: Double, radius: Double, kilograms: Double) {
+        self.length = length
+        self.radius = radius
+        self.kilograms = kilograms
+    }
+}
+
+extension Pipe: CustomStringConvertible {
+    var description : String {
+        return "длина: \(length), радиус: \(radius), кг: \(kilograms), объём: \(volume())"
+    }
+}
+
+
+struct Queue<T> {
+    var elements: [T] = []
+    
+    mutating func push(_ i: T) {        //добавление элемента
+        elements.append(i)
+    }
+    mutating func pop() -> T? {         //извлечение элемента
+        return elements.removeFirst()
+    }   
+    
+    func Print_elements() {
+        print(elements)
+    }
+    
+    subscript(i: Int) -> T? {
+        return (i < elements.count ?  elements[i] : nil)
+    }
+}
+
+extension Queue {
+    func Filter(predicate:(T) -> Bool) -> [T] {
+        var end = [T]()
+        for i in elements {
+            if predicate(i) {
+                end.append(i)
+            }
+        }
+        return end
+    }
+}
+
+var plate = Queue<Plate>()
+var pipe = Queue<Pipe>()
+
+plate.push(Plate(length: 5, width: 10, height: 20, kilograms: 5))
+plate.push(Plate(length: 6, width: 4, height: 10, kilograms: 4))
+
+pipe.push(Pipe(length: 40, radius: 4, kilograms: 2))
+pipe.push(Pipe(length: 20, radius: 7, kilograms: 1))
+
+plate.Print_elements()
+print()
+pipe.Print_elements()
+print()
+
+print(plate.Filter(predicate: {$0.length == 5}))
+print()
+
+print(pipe.Filter(predicate: {$0.volume() == 140}))
+print()
+
+
