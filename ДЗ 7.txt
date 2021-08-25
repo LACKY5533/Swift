@@ -23,10 +23,6 @@ class CreditCard {
         balance = self.balance - price
     }
     
-    func deposit_money (money: Double) { //функция для внесения денег
-        balance = self.balance + money
-    }
-    
     func print_Balance() { //функция для того, чтобы узнать свой баланс
         print ("Баланс карты: \(balance) рублей")
     }
@@ -39,13 +35,18 @@ class CreditCard {
             self.card_block = false
         }
     }
+    
+    func deposit_money (money: Double) { //функция для внесения денег
+        balance = self.balance + money
+    }
+    
 }
 
 extension CreditCard_Error: CustomStringConvertible {
     var description: String {
         switch self {
-        case .insufficientFunds(let moneyNeed): return "На карте недостаточно денег для проведения этой операции. Вам не хватает \(moneyNeed) рублей"
         case .frozenBalance: return "Ваша карта заблокирована."
+        case .insufficientFunds(let moneyNeed): return "На карте недостаточно денег для проведения этой операции. Вам не хватает \(moneyNeed) рублей"
         }
     }
 }
