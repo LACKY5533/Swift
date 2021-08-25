@@ -1,0 +1,90 @@
+enum CreditCard_Error: Error {
+    case insufficientFunds (moneyNeed: Double) //недостаточно средств на карте
+    case frozenBalance //карта заблокирована
+}
+
+class CreditCard {
+    var balance: Double = 4500
+    var card_block = false
+    
+
+    func buy_thing(price: Double)throws {
+        guard card_block == false else{
+            throw CreditCard_Error.frozenBalance
+        }
+        guard price <= (self.balance) else {
+            if balance < 0 {
+                throw CreditCard_Error.insufficientFunds(moneyNeed: price)
+            } else {
+                throw CreditCard_Error.insufficientFunds(moneyNeed: price - balance)
+            }
+        }
+
+        balance = self.balance - price
+    }
+    
+    func deposit_money (money: Double) { //функция для внесения денег
+        balance = self.balance + money
+    }
+    
+    func print_Balance() { //функция для того, чтобы узнать свой баланс
+        print ("Баланс карты: \(balance) рублей")
+    }
+    
+    func Card_block(card_block: Bool) { //функция для блокировки карты
+        switch card_block {
+        case true:
+            self.card_block = true
+        case false:
+            self.card_block = false
+        }
+    }
+}
+
+extension CreditCard_Error: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .insufficientFunds(let moneyNeed): return "На карте недостаточно денег для проведения этой операции. Вам не хватает \(moneyNeed) рублей"
+        case .frozenBalance: return "Ваша карта заблокирована."
+        }
+    }
+}
+
+
+let test = CreditCard()
+
+test.print_Balance()
+print()
+
+print("Пытаемся купить вещь за 900 рублей")
+do {
+    try test.buy_thing(price: 900)
+} catch let error as CreditCard_Error {
+    print(error.description)
+}
+
+test.print_Balance()
+print()
+
+print("Пополняем баланс на 5000 рублей")
+test.deposit_money(money: 5000)
+test.print_Balance()
+print()
+
+print("Пытаемся купить вещь за 10900 рублей")
+do {
+    try test.buy_thing(price: 10900)
+} catch let error as CreditCard_Error {
+    print(error.description)
+}
+print()
+
+
+test.Card_block(card_block: true)
+
+
+do {
+    try test.buy_thing(price: 1500)
+} catch let error as CreditCard_Error {
+    print(error.description)
+}
